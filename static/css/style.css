@@ -3,6 +3,10 @@ body {
   margin: 0;
 }
 
+body {
+  background-color: black;
+}
+
 #map,
 body,
 html {
@@ -11,9 +15,7 @@ html {
 
 .legend {
   background-color: white;
-  
   color: rgb(0, 0, 0);
-  
   padding: 12px;
   border-radius: 8px;
 }
@@ -23,4 +25,10 @@ html {
   margin-right: 8px;
   width: 18px;
   height: 18px;
+}
+
+#map {
+  text-align: center;
+  display: inline-block;
+  border-width: 3rem;
 }
