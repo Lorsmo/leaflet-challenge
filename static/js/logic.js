@@ -86,33 +86,72 @@ function createMap(earthquakes) {
   // Pass in our baseMaps and overlayMaps
   // Add the layer control to the map
   L.control.layers(baseMaps, overlayMaps, {
-    collapsed: false
+    collapsed: true
   }).addTo(myMap);
-}
+
+  // Create a legend to display information about our map
+  var info = L.control({
+    position: "bottomright"
+  });
+
+  // When the layer control is added, insert a div with the class of "legend"
+  info.onAdd = function() {
+    var div = L.DomUtil.create("div", "legend"),
+      labels = ["0-1", "1-2", "2-3", "3-4", "4-5", "5+"];
+      //colors = ["green", "greenyellow", "yellowgreen", "yellow", "orange", "red"];
+
+    for (var i = 0; i < labels.length; i++) {
+      div.innerHTML += '<i style="background:' + getColor(i) + '"></i> ' +
+              labels[i] + '<br>' ;
+    }
+    return div;
+  };
+  // Add the info legend to the map
+  info.addTo(myMap);
+
+
+  //// Adds Legend
+  //let legend = L.control({position: 'bottomright'});
+  //legend.onAdd = function(myMap) {
+    //let div = L.DomUtil.create('div', 'legend'),
+      //grades = [0, 1, 2, 3, 4, 5],
+      //labels = ["0-1", "1-2", "2-3", "3-4", "4-5", "5+"];
+//
+    //for (let i = 0; i < grades.length; i++) {
+      //div.innerHTML += '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+              //grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    //}
+//
+    //return div;
+  //};
+  //legend.addTo(myMap);
+
+};
+
 // Create function to set the color for different magnitude
 function getColor(magnitude) {
     // Conditionals for magnitude
-    if (magnitude > 5) {
+    if (magnitude >= 5) {
       return "red";
     }
-    else if (magnitude > 4) {
-      return "orange";
+    else if (magnitude >= 4) {
+      return "peru";
     }
-    else if (magnitude > 3) {
-     return "yellow";
+    else if (magnitude >= 3) {
+     return "darkorange";
     }
-    else if (magnitude > 2) {
+    else if (magnitude >= 2) {
+      return "yellow";
+    }
+    else if (magnitude >= 1) {
       return "yellowgreen";
-    }
-    else if (magnitude > 1) {
-      return "greenyellow";
     }
     else {
       return "green";
     }
-  };
+};
 
 // Define a circleSize function that will give each city a different radius based on its population
 function circleSize(magnitude) {
-  return magnitude ** 2.1;
+  return magnitude ** 2;
 }
